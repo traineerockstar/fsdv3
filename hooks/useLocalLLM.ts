@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CreateWebWorkerMLCEngine, MLCEngineInterface, InitProgressReport } from "@mlc-ai/web-llm";
+import LLMWorker from '../workers/llm.worker.ts?worker';
 
 export interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
@@ -20,10 +21,8 @@ export const useLocalLLM = () => {
 
     setIsLoading(true);
     try {
-      const worker = new Worker(
-        new URL('../workers/llm.worker.ts', import.meta.url), 
-        { type: 'module' }
-      );
+      // Instantiate worker using Vite import syntax
+      const worker = new LLMWorker();
 
       const engineInstance = await CreateWebWorkerMLCEngine(
         worker,

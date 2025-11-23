@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import WhisperWorker from '../workers/whisper.worker.ts?worker';
 
 interface UseSpeechRecognitionProps {
   onResult: (transcript: string) => void;
@@ -15,24 +16,29 @@ export const useSpeechRecognition = ({ onResult }: UseSpeechRecognitionProps) =>
   const worker = useRef<Worker | null>(null);
   const audioContext = useRef<AudioContext | null>(null);
   const mediaStream = useRef<MediaStream | null>(null);
-  const workletNode = useRef<AudioWorkletNode | null>(null); // Or ScriptProcessor for wider compat
   const scriptProcessor = useRef<ScriptProcessorNode | null>(null);
   
   // Buffer to store audio data before sending to worker
   const audioBufferRef = useRef<Float32Array>(new Float32Array(0));
+  
+  // Use ref for callback to avoid re-initializing worker on every render
+  const onResultRef = useRef(onResult);
+  useEffect(() => {
+    onResultRef.current = onResult;
+  }, [onResult]);
 
   useEffect(() => {
-    // Initialize Worker
-    worker.current = new Worker(new URL('../workers/whisper.worker.ts', import.meta.url), {
-      type: 'module',
-    });
+    // Initialize Worker using Vite import
+    worker.current = new WhisperWorker();
 
     worker.current.onmessage = (event) => {
       const { type, text, error: workerError } = event.data;
       if (type === 'ready') {
         setIsModelLoading(false);
       } else if (type === 'result') {
-        onResult(text);
+        if (onResultRef.current) {
+            onResultRef.current(text);
+        }
       } else if (type === 'error') {
         setError(workerError);
         setIsListening(false);
@@ -45,7 +51,7 @@ export const useSpeechRecognition = ({ onResult }: UseSpeechRecognitionProps) =>
     return () => {
       worker.current?.terminate();
     };
-  }, [onResult]);
+  }, []); // Empty dependency array - worker only inits once
 
   /**
    * Downsamples audio data from source sample rate to 16000Hz
