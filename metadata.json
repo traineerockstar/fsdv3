@@ -1,0 +1,8 @@
+{
+  "name": "Copy of FSD.PRO v3",
+  "description": "A specialized companion app for field service engineers to process schedule screenshots, extract job data via Gemini AI, manage routes, and generate customer notifications.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation"
+  ]
+}

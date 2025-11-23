@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/512/900/900618.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FSD.PRO | Field Service Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-in': 'slideIn 0.5s ease-out',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideIn: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "url": "https://aistudiocdn.com/url@^0.11.4",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "vite-plugin-pwa": "https://aistudiocdn.com/vite-plugin-pwa@^1.1.0",
+    "@mlc-ai/web-llm": "https://aistudiocdn.com/@mlc-ai/web-llm@^0.2.79",
+    "@xenova/transformers": "https://aistudiocdn.com/@xenova/transformers@^2.17.2"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-950 text-slate-200 antialiased">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
